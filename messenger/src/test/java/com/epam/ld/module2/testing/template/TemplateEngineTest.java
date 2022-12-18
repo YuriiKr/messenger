@@ -31,6 +31,6 @@ public class TemplateEngineTest {
     void sendMailTest_positive() {
         String message = "message";
         String address = "address";
-        assertEquals("message sent.", templateEngine.generateMessage(template, client));
+        assertEquals("Message successfully sent.", templateEngine.generateMessage(template, client));
     }
 }

@@ -4,16 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class MailServerTest {
 
+    @Mock
     private MailServer mailServer;
 
 
@@ -21,15 +22,16 @@ public class MailServerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        mailServer = new MailServer();
-        String message = "message";
-        String address = "address";
+        mailServer = Mockito.spy(new MailServer());
+
     }
 
     @Test
     void sendMailTest_positive() {
         String message = "message";
         String address = "address";
-        verify(mailServer).send(address, message);
+        doNothing().when(mailServer).send(any(), any());
+        mailServer.send(address, message);
+        verify(mailServer, times(1)).send(any(), any());
     }
 }
